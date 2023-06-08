@@ -8,6 +8,7 @@ html {
   height: 100%;
   margin: 0;
   background-color: black;
+  font-family: "Nunito";
 }
 
 .container {
@@ -15,8 +16,8 @@ html {
   height: 100%;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: 1fr 5fr;
-  grid-template-rows: 1fr 6fr 0.5fr;
+  grid-template-columns: 240px 5fr;
+  grid-template-rows: 135px 6fr 0.25fr;
 }
 
 .header {
@@ -44,13 +45,14 @@ html {
 }
 
 .button-container button:hover {
-    background-color: #363637;
-} 
+  background-color: #363637;
+}
 
 .plus-icon {
-    height: 24px;
-    width: 24px;
-    filter: invert(37%) sepia(10%) saturate(0%) hue-rotate(281deg) brightness(102%) contrast(92%);
+  height: 24px;
+  width: 24px;
+  filter: invert(37%) sepia(10%) saturate(0%) hue-rotate(281deg)
+    brightness(102%) contrast(92%);
 }
 
 .header-text-container {
@@ -90,9 +92,318 @@ a {
 }
 
 .sidebar {
-  /* max-width: 240px; */
   grid-row: 1 / 3;
   background-color: #3f4044;
+
+  display: grid;
+  grid-template-rows: 110px 135px auto 32px;
+}
+
+.logo-container {
+  display: grid;
+  padding-bottom: 15px;
+}
+
+.logo-container input {
+  align-self: self-end;
+  justify-self: center;
+  width: 90%;
+  height: 25px;
+  background-color: #4c4d51;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.todo-category-container {
+  width: 220px;
+  justify-self: center;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: relative;
+  display: grid;
+}
+
+.circle-today {
+  background-color: #007aff;
+}
+
+.circle-scheduled {
+  background-color: #ff453a;
+}
+
+.todo-icons {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  align-self: center;
+  justify-self: center;
+  filter: invert(100%) sepia(0%) saturate(5447%) hue-rotate(176deg)
+    brightness(126%) contrast(110%);
+}
+
+.todo {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  height: 90%;
+
+  background-color: #595a5e;
+  border-radius: 5px;
+  border: none;
+  padding-top: 10px;
+  padding-bottom: 8px;
+}
+
+.all-button {
+  grid-column: 1 / 3;
+  background-color: #595a5e;
+  border-radius: 5px;
+  border: none;
+  height: 90%;
+  margin-top: -7px;
+  padding-bottom: 15px;
+}
+
+.circle-all {
+  background-color: #5b626a;
+}
+
+.todo-number {
+  justify-self: end;
+  align-self: start;
+  color: #959598;
+  font-family: "Nunito";
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: -3px;
+}
+
+.todo-title {
+  color: #959598;
+  font-family: "Nunito";
+  font-size: 15px;
+  font-weight: 600;
+  align-self: end;
+  justify-self: start;
+}
+
+.today-button:active {
+  background-color: #007aff;
+}
+
+.today-button:active .todo-number,
+.today-button:active .todo-title,
+.scheduled-button:active .todo-number,
+.scheduled-button:active .todo-title,
+.all-button:active .todo-number,
+.all-button:active .todo-title {
+  color: #ffffff;
+}
+
+.today-button:active #calendar-blank {
+  filter: invert(29%) sepia(98%) saturate(2592%) hue-rotate(201deg)
+    brightness(103%) contrast(106%);
+}
+
+.today-button:active .circle-today,
+.all-button:active .circle-all,
+.scheduled-button:active .circle-scheduled {
+  background-color: #ffffff;
+}
+
+.scheduled-button:active {
+  background-color: #ff453a;
+}
+
+.scheduled-button:active #calendar-month {
+  filter: invert(65%) sepia(67%) saturate(7444%) hue-rotate(339deg)
+    brightness(101%) contrast(101%);
+}
+
+.all-button:active {
+  background-color: #5b626a;
+}
+.all-button:active #inbox {
+  filter: invert(40%) sepia(9%) saturate(495%) hue-rotate(172deg)
+    brightness(90%) contrast(86%);
+}
+.my-lists {
+  display: grid;
+  grid-template-rows: 32px;
+  grid-auto-rows: 36px;
+  grid-template-columns: 1fr;
+  margin-top: 5px;
+  padding-top: 5px;
+
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+.my-lists::-webkit-scrollbar {
+  width: 6px;
+}
+
+.my-lists::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.my-lists::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+/* For Firefox */
+.my-lists {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.my-lists {
+  scrollbar-color: transparent transparent;
+}
+
+.my-lists-title {
+  padding-left: 16px;
+  justify-self: start;
+  align-self: end;
+
+  font-family: "Nunito";
+  color: #727377;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.circle-lists {
+  background-color: #007aff;
+}
+
+.list-buttons {
+  width: 220px;
+  height: 100%;
+  background-color: #3f4044;
+  border-radius: 5px;
+  border: none;
+  margin-left: 10px;
+  display: grid;
+  grid-template-columns: auto 24px;
+}
+
+.left-list-panel {
+  width: 100%;
+  display: flex;
+  justify-self: left;
+  align-self: center;
+  align-items: center;
+}
+
+.list-name {
+  margin-left: 10px;
+  color: white;
+}
+
+.list-number {
+  align-self: center;
+  color: #6f7074;
+}
+
+.list-buttons:active {
+  background-color: #3375e1;
+}
+
+.list-buttons:active .list-number {
+  color: #5087e5;
+}
+
+.add-list-button {
+  background-color: #3f4044;
+  border: none;
+}
+
+.add-list-text {
+  margin-left: 8px;
+  color: #727377;
+}
+
+.circle-add-list {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #727377;
+  border-radius: 50%;
+}
+
+.todo-icons {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  align-self: center;
+  justify-self: center;
+  filter: invert(100%) sepia(0%) saturate(5447%) hue-rotate(176deg)
+    brightness(126%) contrast(110%);
+}
+
+.add-list-icon {
+  filter: invert(47%) sepia(13%) saturate(103%) hue-rotate(191deg)
+    brightness(91%) contrast(90%);
+}
+
+.no-reminders {
+  justify-self: center;
+  align-self: center;
+  color: #727377;
+  font-size: x-large;
+}
+
+.round-checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #999;
+  outline: none;
+  cursor: pointer;
+}
+
+.round-checkbox:checked {
+  background-color: #999;
+}
+
+ul {
+  padding-left: 15px;
+}
+
+li {
+  display: flex;
+  justify-content: start;
+  height: 36px;
+  list-style: none;
+}
+
+.label-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #343435;
+  margin-top: 4px;
+}
+
+label {
+  width: 100%;
+  padding-left: 10px;
+  text-align: start;
+  color: #d3d3d3;
+  font-weight: 300;
 }
 
 .nav {
@@ -101,6 +412,8 @@ a {
 
 .article {
   background-color: #2b2b2c;
+  display: grid;
+  grid-auto-rows: 36px;
 }
 
 .article p {
