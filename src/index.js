@@ -1,4 +1,6 @@
 import './styles.css';
-import body from './body';
+import body from './components/body';
+import DisplayController from './modules/displayController';
 
-document.body.appendChild(body());
+const displayController = new DisplayController();
+displayController.initialRenderPage();

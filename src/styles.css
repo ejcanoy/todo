@@ -65,12 +65,20 @@ html {
   justify-content: space-between;
 }
 
-.today-header {
+.today {
   color: #007aff;
 }
 
-.reminders-header {
+.reminders {
   color: #ff9f0b;
+}
+
+.scheduled {
+  color: #ff453a;
+}
+
+.all {
+  color: #5b626a;
 }
 
 .number {
@@ -113,6 +121,7 @@ a {
   border: none;
   border-radius: 5px;
   text-align: center;
+  pointer-events: none;
 }
 
 .todo-category-container {
@@ -196,43 +205,43 @@ a {
   justify-self: start;
 }
 
-.today-button:active {
+.today-button:active, .today-button.active {
   background-color: #007aff;
 }
 
-.today-button:active .todo-number,
-.today-button:active .todo-title,
-.scheduled-button:active .todo-number,
-.scheduled-button:active .todo-title,
-.all-button:active .todo-number,
-.all-button:active .todo-title {
+.today-button:active .todo-number, .today-button.active .todo-number,
+.today-button:active .todo-title, .today-button.active .todo-title,
+.scheduled-button:active .todo-number, .scheduled-button.active .todo-number,
+.scheduled-button:active .todo-title, .scheduled-button.active .todo-title,
+.all-button:active .todo-number, .all-button.active .todo-number, 
+.all-button:active .todo-title, .all-button.active .todo-title {
   color: #ffffff;
 }
 
-.today-button:active #calendar-blank {
+.today-button:active #calendar-blank, .today-button.active #calendar-blank {
   filter: invert(29%) sepia(98%) saturate(2592%) hue-rotate(201deg)
     brightness(103%) contrast(106%);
 }
 
-.today-button:active .circle-today,
-.all-button:active .circle-all,
-.scheduled-button:active .circle-scheduled {
+.today-button:active .circle-today, .today-button.active .circle-today,
+.all-button:active .circle-all, .all-button.active .circle-all,
+.scheduled-button:active .circle-scheduled, .scheduled-button.active .circle-scheduled {
   background-color: #ffffff;
 }
 
-.scheduled-button:active {
+.scheduled-button:active, .scheduled-button.active {
   background-color: #ff453a;
 }
 
-.scheduled-button:active #calendar-month {
+.scheduled-button:active #calendar-month, .scheduled-button.active #calendar-month  {
   filter: invert(65%) sepia(67%) saturate(7444%) hue-rotate(339deg)
     brightness(101%) contrast(101%);
 }
 
-.all-button:active {
+.all-button:active, .all-button.active {
   background-color: #5b626a;
 }
-.all-button:active #inbox {
+.all-button:active #inbox, .all-button.active #inbox {
   filter: invert(40%) sepia(9%) saturate(495%) hue-rotate(172deg)
     brightness(90%) contrast(86%);
 }
@@ -284,10 +293,10 @@ a {
 }
 
 .circle-lists {
-  background-color: #007aff;
+  background-color: #ff9f0b;
 }
 
-.list-buttons {
+.list-buttons, .list-form {
   width: 220px;
   height: 100%;
   background-color: #3f4044;
@@ -296,6 +305,17 @@ a {
   margin-left: 10px;
   display: grid;
   grid-template-columns: auto 24px;
+}
+
+.list-form {
+  margin-left: 15px;
+  width: 90%;
+  background-color: #007aff;
+}
+
+.save-button, .list-close {
+  width: 15px;
+  height: 15px;
 }
 
 .left-list-panel {
@@ -316,11 +336,11 @@ a {
   color: #6f7074;
 }
 
-.list-buttons:active {
+.list-buttons:active, .list-buttons.active {
   background-color: #3375e1;
 }
 
-.list-buttons:active .list-number {
+.list-buttons:active .list-number, .list-buttons.active .list-number  {
   color: #5087e5;
 }
 
@@ -379,14 +399,26 @@ a {
   background-color: #999;
 }
 
+.todo-list {
+  height: auto;
+}
+
+h4 {
+  padding-left: 15px;
+  display: flex;
+  justify-content: left;
+  color: #ff9f0b
+}
+
 ul {
+  color: #595a5e;
   padding-left: 15px;
 }
 
 li {
   display: flex;
   justify-content: start;
-  height: 36px;
+  min-height: 36px;
   list-style: none;
 }
 
@@ -412,9 +444,36 @@ label {
 
 .article {
   background-color: #2b2b2c;
-  display: grid;
-  grid-auto-rows: 36px;
+  height: 100%;
+  /* display: grid;
+  grid-auto-rows: 36px; */
+  overflow-y: scroll;
 }
+
+/* For WebKit browsers (Chrome, Safari) */
+.article::-webkit-scrollbar {
+  width: 10px;
+}
+
+.article::-webkit-scrollbar-track {
+  background-color: #363637;
+
+}
+
+.article::-webkit-scrollbar-thumb {
+  background-color: #6f7074;
+}
+
+/* For Firefox */
+/* .article {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.article {
+  scrollbar-color: transparent transparent;
+} */
+
 
 .article p {
   font-size: 18px;
@@ -423,6 +482,91 @@ label {
   text-align: left;
 }
 
+.form-container {
+  padding-left: 10px;
+  width: 100vw;
+}
+.new-todo-form {
+  margin-top: 5px;
+}
+.new-title-div, .new-notes-div{
+  padding-left: 10px;
+  width: 60vw;
+}
+
+.new-title-todo, .new-notes-todo {
+  width: 100%;
+  border: none;
+}
+
+.new-title-todo, .new-title-todo:focus {
+  color: #d3d3d3;
+}
+
+.new-title-todo:focus, .new-notes-todo:focus {
+  outline: none;
+}
+
+.new-title-todo, .new-notes-todo {
+    background-color: #2b2b2c;
+}
+
+
+.new-notes-todo, .new-notes-todo:focus {
+  color: #a3a3a3;
+}
+
+.new-calendar-div, .new-buttons-div {
+  display: flex;
+  padding-left: 10px;
+  margin-top: 3px;
+  justify-items: left;;
+}
+
+.new-calendar-todo {
+  background-color: #333334;
+  color: #a3a3a3;
+  border: none;
+  border-radius: 5px;
+}
+
+.new-submit-todo, .new-cancel-todo {
+  background-color: #333334;
+  border: none;
+}
+
+.new-cancel-todo {
+  margin-left: 10px;
+}
+
+.close-button {
+  display: none;
+}
+
+.close-button-icon {
+  width: 20px;
+  height: 20px;
+  /* filter: invert(65%) sepia(67%) saturate(7444%) hue-rotate(339deg)
+    brightness(101%) contrast(101%); */
+    /* filter: invert(37%) sepia(10%) saturate(0%) hue-rotate(281deg)
+    brightness(102%) contrast(92%); */
+    filter: invert(76%) sepia(34%) saturate(5803%) hue-rotate(353deg) brightness(103%) contrast(101%);
+
+}
+
+li:hover .close-button {
+  display: block;
+}
+
+.close-button {
+  background-color: #2b2b2c;
+  width: 30px;
+  border: none;
+}
+
+.new-list-form {
+  padding-left: 5px;
+}
 .footer {
   background-color: black;
   grid-column: 1 / 3;

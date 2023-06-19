@@ -3,7 +3,6 @@ import Plus from "./assets/plus.svg";
 export const header = () => {
   const headerElmt = document.createElement("header");
   headerElmt.classList.add("header");
-  headerElmt.classList.add("reminders-header");
 
   const buttonCtnElmt = document.createElement("div");
   buttonCtnElmt.classList.add("button-container");
@@ -22,12 +21,10 @@ export const header = () => {
   headerTextContainerElmt.classList.add("header-text-container");
 
   const title = document.createElement("span");
-  title.innerHTML = "Reminders";
   headerTextContainerElmt.appendChild(title);
 
   const number = document.createElement("span");
   number.classList.add("number");
-  number.innerHTML = "17";
   headerTextContainerElmt.appendChild(number);
 
   headerElmt.appendChild(headerTextContainerElmt);
@@ -42,3 +39,7 @@ export const today = () => {
   headerElmt.innerText = "Today";
   return headerElmt;
 };
+
+export const scheduled = () => {
+  
+}
