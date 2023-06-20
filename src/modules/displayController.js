@@ -44,47 +44,36 @@ export default class DisplayController {
       const curButton = document.querySelector(buttonClass);
       curButton.addEventListener("click", (e) => this.renderActiveTab(e));
     });
-
-    // const listButtons = document.querySelectorAll(".list-buttons");
-    // listButtons.forEach((list) => {
-    //   list.addEventListener("click", (e) => this.renderActiveTab(e));
-    // });
-
-    const removeListButtons = document.querySelectorAll(".remove-list-button");
-    // removeListButtons.forEach((button) => {
-      
-    //   button.addEventListener("click", (e) => {
-    //     e.stopPropagation();
-    //     this.removeList(e)});
-    // });
   }
 
   removeList(e) {
     const clickedButton = e.target;
     let listName;
     if (clickedButton.tagName === "IMG") {
-      listName = clickedButton.parentNode.parentNode.parentNode.querySelector(".list-name").innerHTML;
+      listName =
+        clickedButton.parentNode.parentNode.parentNode.querySelector(
+          ".list-name"
+        ).innerHTML;
     } else {
-      listName = clickedButton.parentNode.parentNode.querySelector(".list-name").innerHTML;
+      listName =
+        clickedButton.parentNode.parentNode.querySelector(
+          ".list-name"
+        ).innerHTML;
     }
     this.remindersController.removeList(listName);
 
     const activeButton = document.querySelector(".active");
     if (
-      !(activeButton.classList.contains("all-button") ||
-      activeButton.classList.contains("today-button") ||
-      activeButton.classList.contains("scheduled-button"))
+      !(
+        activeButton.classList.contains("all-button") ||
+        activeButton.classList.contains("today-button") ||
+        activeButton.classList.contains("scheduled-button")
+      )
     ) {
       const allButton = document.querySelector(".all-button").click();
     }
-    
-    this.renderPage();
-  
 
-    // find the parentNode
-      // get the listname
-      // remove the list using the reminderController
-      // click on the render active tab button
+    this.renderPage();
   }
 
   removeTodo(e) {
@@ -127,13 +116,15 @@ export default class DisplayController {
   }
 
   renderActiveTab(e) {
-    if (e.target.classList.contains("close-button-icon") || e.target.classList.contains("remove-list-button")) {
-      this.removeList(e)
+    if (
+      e.target.classList.contains("close-button-icon") ||
+      e.target.classList.contains("remove-list-button")
+    ) {
+      this.removeList(e);
       return;
-
     }
     const curActiveButton = document.querySelector(".active");
-    (curActiveButton);
+    curActiveButton;
     if (!(curActiveButton === e.target || curActiveButton.contains(e.target))) {
       this.highlightActiveTab(e);
       this.loadHeaderTitle();
@@ -257,10 +248,7 @@ export default class DisplayController {
       const listNameElmt = document.querySelector(".header-title");
       listName = listNameElmt.innerHTML;
     }
-
-    // if scheduled have to default to today
-    // const currentDate = new Date().toISOString().split("T")[0];
-    // dateInput.value = currentDate;
+    
     const title = document.querySelector(
       ".new-todo-form input.new-title-todo"
     ).value;
@@ -274,12 +262,10 @@ export default class DisplayController {
     if (activeButton.classList.contains("scheduled-button")) {
       if (date === "") {
         let headerDate = document.querySelector(".todo-list h4").innerHTML;
-        const parsedDate = parse(headerDate, 'MMMM dd, yyyy', new Date());
-        returnedDate = format(parsedDate, 'MM/dd/yyyy');
+        const parsedDate = parse(headerDate, "MMMM dd, yyyy", new Date());
+        returnedDate = format(parsedDate, "MM/dd/yyyy");
       }
     } else {
-
-  
       if (date !== "") {
         const parsedDate = parse(date, "yyyy-MM-dd", new Date());
         returnedDate = format(parsedDate, "MM/dd/yyyy");
@@ -297,7 +283,7 @@ export default class DisplayController {
   }
 
   loadListForm() {
-    (this.remindersController.getAll());
+    this.remindersController.getAll();
     if (this.remindersController.getAll().getList("New List")) {
       return;
     }
@@ -311,7 +297,6 @@ export default class DisplayController {
 
     const curActiveButton = document.querySelector(".active");
     curActiveButton.classList.remove("active");
-
 
     const hiddenListDiv = document.createElement("div");
     hiddenListDiv.style.display = "none";
@@ -338,7 +323,6 @@ export default class DisplayController {
     hiddenLeftListPanelElmt.appendChild(hiddenListName);
     hiddenListButtonElmt.appendChild(hiddenLeftListPanelElmt);
 
-
     const removeButtonContainer = document.createElement("div");
     removeButtonContainer.classList.add("remove-list-button-container");
     const removeButton = document.createElement("button");
@@ -359,14 +343,11 @@ export default class DisplayController {
     myListsElmt.appendChild(hiddenListDiv);
 
     // create the form
-
     const listDiv = document.createElement("div");
     const listButtonElmt = document.createElement("div");
     listButtonElmt.classList.add("list-buttons");
     listButtonElmt.classList.add("list-form");
     listButtonElmt.classList.add("active");
-
-    // listButtonElmt.disabled = true;
 
     const leftListPanelElmt = document.createElement("div");
     leftListPanelElmt.classList.add("left-list-panel");
@@ -385,20 +366,9 @@ export default class DisplayController {
     listName.classList.add("list-name");
     listName.style.display = "none";
     inputSpan.appendChild(listName);
-    // listName.classList.add("list-name");
     const newListInput = document.createElement("input");
     newListInput.placeholder = "New List";
     newListInput.classList.add("new-list-input");
-
-    // const buttonsDiv = document.createElement("div");
-    // const saveButton = document.createElement("button");
-    // saveButton.innerText = "Y";
-    // saveButton.classList.add("save-button");
-    // const closeButton = document.createElement("button");
-    // closeButton.classList.add("list-close");
-    // closeButton.innerText = "x";
-    // buttonsDiv.appendChild(saveButton);
-    // buttonsDiv.appendChild(closeButton);
 
     const listNumber = document.createElement("div");
     listNumber.style.display = "none";
@@ -409,7 +379,6 @@ export default class DisplayController {
     inputSpan.appendChild(newListInput);
     leftListPanelElmt.appendChild(inputSpan);
     listButtonElmt.appendChild(leftListPanelElmt);
-    // listButtonElmt.appendChild(buttonsDiv);
     listDiv.appendChild(listButtonElmt);
     myListsElmt.appendChild(listDiv);
     newListInput.focus();
@@ -417,7 +386,6 @@ export default class DisplayController {
     hiddenListButtonElmt.addEventListener("click", (e) =>
       this.renderActiveTab(e)
     );
-    // closeButton.addEventListener("click", () => this.removeList());
     newListInput.addEventListener("blur", () => this.removeInput());
     newListInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
@@ -427,10 +395,6 @@ export default class DisplayController {
 
     this.loadHeaderTitle();
     this.loadListAndTodos();
-    // create the list
-    // hide it
-    // when updating name
-    // display:block the elemt
   }
 
   removeInput() {
@@ -449,15 +413,12 @@ export default class DisplayController {
 
   updateList(inputValue) {
     if (this.remindersController.getAll().getList(inputValue)) {
-      // alert("Cannot Create Duplicate List!");
       return;
     }
     this.remindersController.updateList("New List", inputValue);
     const hiddenButton = document.querySelector(".hidden");
     hiddenButton.querySelector(".list-name").innerText = inputValue;
   }
-
-  addList() {}
 
   loadPageComponents() {
     const curBody = body();
@@ -550,22 +511,18 @@ export default class DisplayController {
       listButtonElmt.appendChild(leftListPanelElmt);
 
       // remove button
-      
       const removeButtonContainer = document.createElement("div");
       removeButtonContainer.classList.add("remove-list-button-container");
       if (curList.getName() !== "Reminders") {
-      const removeButton = document.createElement("button");
-      const removeIcon = document.createElement("img");
-      removeIcon.classList.add("close-button-icon");
-      removeIcon.src = Close;
-      removeButton.appendChild(removeIcon);
-      removeButton.classList.add("remove-list-button");
-      removeButtonContainer.appendChild(removeButton);
+        const removeButton = document.createElement("button");
+        const removeIcon = document.createElement("img");
+        removeIcon.classList.add("close-button-icon");
+        removeIcon.src = Close;
+        removeButton.appendChild(removeIcon);
+        removeButton.classList.add("remove-list-button");
+        removeButtonContainer.appendChild(removeButton);
       }
       listButtonElmt.appendChild(removeButtonContainer);
-
-
-      
 
       const listNumber = document.createElement("div");
       listNumber.classList.add("list-number");
@@ -645,7 +602,6 @@ export default class DisplayController {
   }
 
   loadTodayTodos() {
-    // get the todos from before today
     const articleElmt = document.querySelector(".article");
     const curAll = this.remindersController.getAll();
     const todaysTodos = [];
@@ -817,7 +773,6 @@ export default class DisplayController {
     });
   }
   completeTodo(e) {
-
     const clickedTodo = e.target.parentNode;
     let listName;
     let todoTitle = clickedTodo.querySelector(".li-todo-title").innerText;
@@ -847,56 +802,5 @@ export default class DisplayController {
     }
 
     this.remindersController.completeTodo(listName, todoTitle, notes, date);
-    
-    // if all get h4
-    
-    // today get list-name || scheduled get list-name
-
-    //
-
-
-    
-    // label = e.target.nextElementSibling;
-
-    // figure out how to get the listNmae
-
-
-    // const listName = label.querySelector("li-todo-title") ? label.querySelector("li-todo-title") : "";
-    // const todoTitle = label.querySelector("li-todo-t") ? 
-    // const notes = 
-    // const date = 
-    // // date = date.substring(3, date.length);
-    // this.remindersController.completeTodo(listName, todoTitle, notes, date);
-    // (this.remindersController);
   }
 }
-
-
-
-// displayController
-// load all components
-// load all event listeners here
-// return values from list form
-// return values from todo form
-// remindersController
-// addTodo -> title, date, note
-// removeTodo -> title
-// addList -> name
-// removeList -> name
-// update todo -> title, category, value
-// update list ->
-// dataAccessLayer
-// loadData() -> load loacalStorage all to all
-// saveData() -> save curAll to localStorage
-
-// click on add list
-
-// handle the clicks
-// if click on today highlight tab and load today
-// if click on schedule highlight tab and load schedule
-// if click on all highlight tab and load all
-// figure out how to dynamically create each reminder!
-// if add list load modal
-// when modal is submitted add data to list
-// if click on plus button load modal to enter in details
-// when modal is submitted create new todo and add that to all[list];
