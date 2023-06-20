@@ -60,7 +60,6 @@ export default class DisplayController {
   }
 
   removeList(e) {
-    console.log("removing");
     const clickedButton = e.target;
     let listName;
     if (clickedButton.tagName === "IMG") {
@@ -71,7 +70,6 @@ export default class DisplayController {
     this.remindersController.removeList(listName);
 
     const activeButton = document.querySelector(".active");
-    console.log(activeButton);
     if (
       !(activeButton.classList.contains("all-button") ||
       activeButton.classList.contains("today-button") ||
@@ -99,7 +97,6 @@ export default class DisplayController {
 
     let listName;
     let todoTitle = clickedTodo.querySelector(".li-todo-title").innerText;
-    console.log(clickedTodo.querySelector(".li-todo-date"));
     let date =
       clickedTodo.querySelector(".li-todo-date") !== null
         ? clickedTodo.querySelector(".li-todo-date").innerText
@@ -118,7 +115,6 @@ export default class DisplayController {
       const convertedDate = parse(date, "MMMM d, yyyy", new Date());
       date = format(convertedDate, "MM/dd/yy");
       listName = document.querySelector(".list-name").innerText;
-      console.log(date);
     } else if (activeButton.classList.contains("today-button")) {
       listName = document.querySelector(".list-name").innerText;
       date = date.substring(3, date.length);
@@ -131,17 +127,13 @@ export default class DisplayController {
   }
 
   renderActiveTab(e) {
-    // console.log(e.target);
     if (e.target.classList.contains("close-button-icon") || e.target.classList.contains("remove-list-button")) {
-      // right now just click on reminders so we make progress
       this.removeList(e)
-
-      // figure out logic on how to get the next element or move it to all
       return;
 
     }
     const curActiveButton = document.querySelector(".active");
-    console.log(curActiveButton);
+    (curActiveButton);
     if (!(curActiveButton === e.target || curActiveButton.contains(e.target))) {
       this.highlightActiveTab(e);
       this.loadHeaderTitle();
@@ -234,7 +226,6 @@ export default class DisplayController {
   }
 
   addTodo() {
-    // this.remindersController.addTodo()
     const todoValues = this.getTodoFormValues();
     this.remindersController.createTodo(
       todoValues.listName,
@@ -244,8 +235,6 @@ export default class DisplayController {
     );
     this.removeTodoForm();
     this.renderPage();
-    // add the new todo in the form
-    // reload rerender page?
   }
 
   getTodoFormValues() {
@@ -296,7 +285,7 @@ export default class DisplayController {
   }
 
   loadListForm() {
-    console.log(this.remindersController.getAll());
+    (this.remindersController.getAll());
     if (this.remindersController.getAll().getList("New List")) {
       return;
     }
@@ -311,10 +300,6 @@ export default class DisplayController {
     const curActiveButton = document.querySelector(".active");
     curActiveButton.classList.remove("active");
 
-    // this.renderActiveTab();
-    // make sure that it is active and hidden
-
-    // create hidden node
 
     const hiddenListDiv = document.createElement("div");
     hiddenListDiv.style.display = "none";
@@ -838,7 +823,6 @@ export default class DisplayController {
       const convertedDate = parse(date, "MMMM d, yyyy", new Date());
       date = format(convertedDate, "MM/dd/yy");
       listName = document.querySelector(".list-name").innerText;
-      console.log(date);
     } else if (activeButton.classList.contains("today-button")) {
       listName = document.querySelector(".list-name").innerText;
       date = date.substring(3, date.length);
@@ -847,7 +831,6 @@ export default class DisplayController {
     }
 
     this.remindersController.completeTodo(listName, todoTitle, notes, date);
-    // console.log(listName, todoTitle, notes, date);
     
     // if all get h4
     
@@ -868,7 +851,7 @@ export default class DisplayController {
     // const date = 
     // // date = date.substring(3, date.length);
     // this.remindersController.completeTodo(listName, todoTitle, notes, date);
-    // console.log(this.remindersController);
+    // (this.remindersController);
   }
 }
 
