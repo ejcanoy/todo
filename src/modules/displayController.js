@@ -243,7 +243,6 @@ export default class DisplayController {
     let listName;
     if (
       activeButton.classList.contains("all-button") ||
-      activeButton.classList.contains("scheduled-button") ||
       activeButton.classList.contains("today-button")
     ) {
       const listNameElmt = document.querySelector(".todo-list h4");
@@ -252,6 +251,8 @@ export default class DisplayController {
       } else {
         listName = listNameElmt.innerHTML;
       }
+    } else if (activeButton.classList.contains("scheduled-button")) {
+      listName = "Reminders";
     } else {
       const listNameElmt = document.querySelector(".header-title");
       listName = listNameElmt.innerHTML;
@@ -266,16 +267,27 @@ export default class DisplayController {
     const notes = document.querySelector(
       ".new-todo-form input.new-notes-todo"
     ).value;
+    let returnedDate;
     const date = document.querySelector(
       ".new-todo-form input[type='date']"
     ).value;
-    let returnedDate;
-    if (date !== "") {
-      const parsedDate = parse(date, "yyyy-MM-dd", new Date());
-      returnedDate = format(parsedDate, "MM/dd/yyyy");
+    if (activeButton.classList.contains("scheduled-button")) {
+      if (date === "") {
+        let headerDate = document.querySelector(".todo-list h4").innerHTML;
+        const parsedDate = parse(headerDate, 'MMMM dd, yyyy', new Date());
+        returnedDate = format(parsedDate, 'MM/dd/yyyy');
+      }
     } else {
-      returnedDate = date;
+
+  
+      if (date !== "") {
+        const parsedDate = parse(date, "yyyy-MM-dd", new Date());
+        returnedDate = format(parsedDate, "MM/dd/yyyy");
+      } else {
+        returnedDate = date;
+      }
     }
+
     return { listName, title, notes, returnedDate };
   }
 
@@ -538,8 +550,10 @@ export default class DisplayController {
       listButtonElmt.appendChild(leftListPanelElmt);
 
       // remove button
+      
       const removeButtonContainer = document.createElement("div");
       removeButtonContainer.classList.add("remove-list-button-container");
+      if (curList.getName() !== "Reminders") {
       const removeButton = document.createElement("button");
       const removeIcon = document.createElement("img");
       removeIcon.classList.add("close-button-icon");
@@ -547,7 +561,9 @@ export default class DisplayController {
       removeButton.appendChild(removeIcon);
       removeButton.classList.add("remove-list-button");
       removeButtonContainer.appendChild(removeButton);
+      }
       listButtonElmt.appendChild(removeButtonContainer);
+
 
       
 
