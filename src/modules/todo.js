@@ -1,9 +1,10 @@
 export class Todo {
-    constructor(date, title, notes, list) {
+    constructor(date, title, notes, list, completed) {
         this.date = date;
         this.title = title;
         this.notes = notes;
         this.list = list;
+        this.completed = completed ? true : false ;
     }
 
     getDate() {
@@ -22,6 +23,10 @@ export class Todo {
         return this.list;
     }
 
+    getCompleted() {
+        return this.completed;
+    }
+
     setDate(date) {
         this.date = date;
     }
@@ -36,5 +41,13 @@ export class Todo {
 
     setList (list) {
         this.list = list;
+    }
+    
+    setComplete() {
+        if (this.completed) {
+            this.completed = false;
+        } else {
+            this.completed = true;
+        }
     }
 }

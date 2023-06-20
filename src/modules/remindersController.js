@@ -33,7 +33,7 @@ export default class RemindersController {
     }
 
     removeList(listName) {
-        this.all = this.all.filter((list) => list.name !== listName);
+        this.all.removeList(listName);
     }
 
     createTodo(listName, date, title, notes) {
@@ -45,6 +45,17 @@ export default class RemindersController {
     removeTodo(listName, title, notes, date) {
         const curList = this.all.getList(listName);
         curList.removeTodo(title, notes, date);
+    }
+
+    updateList(listName, title) {
+        const curList = this.all.getList(listName);
+        curList.setName(title);
+    }
+
+    completeTodo(listName, todoTitle, notes, date) {
+        const curList = this.all.getList(listName);
+        const curTodo = curList.getTodo(todoTitle, notes, date);
+        curTodo.setComplete();
     }
 }
 

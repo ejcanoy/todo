@@ -45,10 +45,48 @@ export default class DisplayController {
       curButton.addEventListener("click", (e) => this.renderActiveTab(e));
     });
 
-    const listButtons = document.querySelectorAll(".list-buttons");
-    listButtons.forEach((list) => {
-      list.addEventListener("click", (e) => this.renderActiveTab(e));
-    });
+    // const listButtons = document.querySelectorAll(".list-buttons");
+    // listButtons.forEach((list) => {
+    //   list.addEventListener("click", (e) => this.renderActiveTab(e));
+    // });
+
+    const removeListButtons = document.querySelectorAll(".remove-list-button");
+    // removeListButtons.forEach((button) => {
+      
+    //   button.addEventListener("click", (e) => {
+    //     e.stopPropagation();
+    //     this.removeList(e)});
+    // });
+  }
+
+  removeList(e) {
+    console.log("removing");
+    const clickedButton = e.target;
+    let listName;
+    if (clickedButton.tagName === "IMG") {
+      listName = clickedButton.parentNode.parentNode.parentNode.querySelector(".list-name").innerHTML;
+    } else {
+      listName = clickedButton.parentNode.parentNode.querySelector(".list-name").innerHTML;
+    }
+    this.remindersController.removeList(listName);
+
+    const activeButton = document.querySelector(".active");
+    console.log(activeButton);
+    if (
+      !(activeButton.classList.contains("all-button") ||
+      activeButton.classList.contains("today-button") ||
+      activeButton.classList.contains("scheduled-button"))
+    ) {
+      const allButton = document.querySelector(".all-button").click();
+    }
+    
+    this.renderPage();
+  
+
+    // find the parentNode
+      // get the listname
+      // remove the list using the reminderController
+      // click on the render active tab button
   }
 
   removeTodo(e) {
@@ -93,6 +131,15 @@ export default class DisplayController {
   }
 
   renderActiveTab(e) {
+    // console.log(e.target);
+    if (e.target.classList.contains("close-button-icon") || e.target.classList.contains("remove-list-button")) {
+      // right now just click on reminders so we make progress
+      this.removeList(e)
+
+      // figure out logic on how to get the next element or move it to all
+      return;
+
+    }
     const curActiveButton = document.querySelector(".active");
     console.log(curActiveButton);
     if (!(curActiveButton === e.target || curActiveButton.contains(e.target))) {
@@ -249,8 +296,8 @@ export default class DisplayController {
   }
 
   loadListForm() {
+    console.log(this.remindersController.getAll());
     if (this.remindersController.getAll().getList("New List")) {
-      alert("Cannot Create Duplicate List!");
       return;
     }
     if (document.querySelector(".new-list-input") !== null) {
@@ -293,6 +340,18 @@ export default class DisplayController {
     // hiddenListButtonElmt.classList.add("active");
     hiddenLeftListPanelElmt.appendChild(hiddenListName);
     hiddenListButtonElmt.appendChild(hiddenLeftListPanelElmt);
+
+
+    const removeButtonContainer = document.createElement("div");
+    removeButtonContainer.classList.add("remove-list-button-container");
+    const removeButton = document.createElement("button");
+    const removeIcon = document.createElement("img");
+    removeIcon.classList.add("close-button-icon");
+    removeIcon.src = Close;
+    removeButton.appendChild(removeIcon);
+    removeButton.classList.add("remove-list-button");
+    removeButtonContainer.appendChild(removeButton);
+    hiddenListButtonElmt.appendChild(removeButtonContainer);
 
     const hiddenListNumber = document.createElement("div");
     hiddenListNumber.classList.add("list-number");
@@ -369,7 +428,6 @@ export default class DisplayController {
       }
     });
 
-
     this.loadHeaderTitle();
     this.loadListAndTodos();
     // create the list
@@ -379,28 +437,30 @@ export default class DisplayController {
   }
 
   removeInput() {
+    const inputValue = document.querySelector(".new-list-input").value;
+    if (inputValue !== "") {
+      this.updateList(inputValue);
+    }
     const hiddenButton = document.querySelector(".hidden");
     hiddenButton.parentNode.removeAttribute("style");
     hiddenButton.click();
+    hiddenButton.classList.remove("hidden");
     if (document.querySelector(".list-form").parentNode) {
       document.querySelector(".list-form").parentNode.remove();
     }
   }
 
-  updateList() {
-    console.log("updating");
+  updateList(inputValue) {
+    if (this.remindersController.getAll().getList(inputValue)) {
+      // alert("Cannot Create Duplicate List!");
+      return;
+    }
+    this.remindersController.updateList("New List", inputValue);
+    const hiddenButton = document.querySelector(".hidden");
+    hiddenButton.querySelector(".list-name").innerText = inputValue;
   }
 
   addList() {}
-
-  removeList() {
-    // const listForm = document.querySelector(".new-list-input");
-    // listForm.parentNode.parentNode.parentNode.parentNode.remove();
-    document.querySelector(".list-form").parentNode.remove();
-
-    // still have to get
-    console.log("removing");
-  }
 
   loadPageComponents() {
     const curBody = body();
@@ -492,6 +552,20 @@ export default class DisplayController {
       leftListPanelElmt.appendChild(listName);
       listButtonElmt.appendChild(leftListPanelElmt);
 
+      // remove button
+      const removeButtonContainer = document.createElement("div");
+      removeButtonContainer.classList.add("remove-list-button-container");
+      const removeButton = document.createElement("button");
+      const removeIcon = document.createElement("img");
+      removeIcon.classList.add("close-button-icon");
+      removeIcon.src = Close;
+      removeButton.appendChild(removeIcon);
+      removeButton.classList.add("remove-list-button");
+      removeButtonContainer.appendChild(removeButton);
+      listButtonElmt.appendChild(removeButtonContainer);
+
+      
+
       const listNumber = document.createElement("div");
       listNumber.classList.add("list-number");
       listNumber.innerText = curListTodos.length;
@@ -499,6 +573,7 @@ export default class DisplayController {
 
       listDiv.appendChild(listButtonElmt);
       myListsElmt.appendChild(listDiv);
+      listButtonElmt.addEventListener("click", (e) => this.renderActiveTab(e));
     });
   }
 
@@ -718,6 +793,12 @@ export default class DisplayController {
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.classList.add("round-checkbox");
+      if (curTodo.getCompleted()) {
+        checkbox.checked = true;
+      } else {
+        checkbox.checked = false;
+      }
+      checkbox.addEventListener("click", (e) => this.completeTodo(e));
 
       const removeButtonElmt = document.createElement("button");
       removeButtonElmt.classList.add("close-button");
@@ -734,7 +815,64 @@ export default class DisplayController {
       todoList.appendChild(li);
     });
   }
+  completeTodo(e) {
+
+    const clickedTodo = e.target.parentNode;
+    let listName;
+    let todoTitle = clickedTodo.querySelector(".li-todo-title").innerText;
+    let date =
+      clickedTodo.querySelector(".li-todo-date") !== null
+        ? clickedTodo.querySelector(".li-todo-date").innerText
+        : "";
+    let notes =
+      clickedTodo.querySelector(".li-todo-notes") !== null
+        ? clickedTodo.querySelector(".li-todo-notes").innerText
+        : "";
+    const activeButton = document.querySelector(".active");
+    if (activeButton.classList.contains("all-button")) {
+      listName =
+        clickedTodo.parentNode.parentNode.querySelector("h4").innerText;
+    } else if (activeButton.classList.contains("scheduled-button")) {
+      const getDate = document.querySelector(".list-name").innerText;
+      date = clickedTodo.parentNode.parentNode.querySelector("h4").innerText;
+      const convertedDate = parse(date, "MMMM d, yyyy", new Date());
+      date = format(convertedDate, "MM/dd/yy");
+      listName = document.querySelector(".list-name").innerText;
+      console.log(date);
+    } else if (activeButton.classList.contains("today-button")) {
+      listName = document.querySelector(".list-name").innerText;
+      date = date.substring(3, date.length);
+    } else {
+      listName = document.querySelector(".header-title").innerText;
+    }
+
+    this.remindersController.completeTodo(listName, todoTitle, notes, date);
+    // console.log(listName, todoTitle, notes, date);
+    
+    // if all get h4
+    
+    // today get list-name || scheduled get list-name
+
+    //
+
+
+    
+    // label = e.target.nextElementSibling;
+
+    // figure out how to get the listNmae
+
+
+    // const listName = label.querySelector("li-todo-title") ? label.querySelector("li-todo-title") : "";
+    // const todoTitle = label.querySelector("li-todo-t") ? 
+    // const notes = 
+    // const date = 
+    // // date = date.substring(3, date.length);
+    // this.remindersController.completeTodo(listName, todoTitle, notes, date);
+    // console.log(this.remindersController);
+  }
 }
+
+
 
 // displayController
 // load all components

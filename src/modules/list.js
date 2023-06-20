@@ -13,7 +13,13 @@ export class List {
     }
 
     getTodo(name, notes, date) {
-        return this.todos.indexOf(name) === -1 ? -1 : todos[name];
+        return this.todos.find((todo) => {
+            return (
+              todo.date === date &&
+              todo.title === name &&
+              todo.notes === notes
+            );
+          });
     }
 
     setName(name) {
