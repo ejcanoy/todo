@@ -1,5 +1,41 @@
-- [] create layout
-    - [] side bar 
-    - [] main 
-        - [] header
-        - [] body
+- [x] create layout
+    - [x] side bar 
+    - [x] main 
+        - [x] header
+        - [x] body
+- [x] learn localstorage docs
+    - storing todo items in one big array 
+        - items will be sorted when new tab is loaded
+- [] business logic
+    - [] creating todo tasks
+        - [] create a reminder
+            - [] title
+            - [] note
+            - [] date
+        - [] deleting a reminder
+        - [] updating a reminder
+        - [] reading reminders
+    - [] lists
+        - [] creating lists
+        - [] deleting lists
+    - [] today
+    - [] scheduled
+        - 
+    - [] all
+        - read all data
+            - sort by
+                - list
+                - date
+- [] objects
+    - [x] todo
+        - [x] date
+        - [x] title
+        - [x] notes
+        - [x] list
+    - [x] list
+        - name
+        - todos
+    - [x] all
+        - lists
+        
+- [] manipulating dom
