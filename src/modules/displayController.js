@@ -319,7 +319,6 @@ export default class DisplayController {
     const hiddenListName = document.createElement("span");
     hiddenListName.classList.add("list-name");
     hiddenListName.innerText = "New List";
-    // hiddenListButtonElmt.classList.add("active");
     hiddenLeftListPanelElmt.appendChild(hiddenListName);
     hiddenListButtonElmt.appendChild(hiddenLeftListPanelElmt);
 
